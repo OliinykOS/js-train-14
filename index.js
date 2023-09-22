@@ -314,31 +314,25 @@ console.log(getDayOfWeek(new Date("2023-01-01")));
  */
 function getDaysInMonth(date) {
     // Перевірка, чи є вхідне значення об'єктом Date,це можно зробити перевіривши чи є date.getTime по типу функція .
-    // Якщо date не є об'єктом Date, повертаємо рядок
-    // "Помилка: вхідне значення має бути об'єктом Date"
-    // Збереження початкової дати для виведення  в форматі ISO.
-    // Отримання поточного місяця.
-    // Отримання поточного року.
-    // Створення об'єкта Date для першого дня наступного місяця.
-    // Віднімання одного дня від наступного місяця, щоб отримати останній день поточного місяця.
-    // Отримання числа останнього дня поточного місяця - це кількість днів у місяці.
-    // Повертаємо об'єкт з початковою датою та кількістю днів у місяці.
-    const inputDate = date;
-    if (typeof inputDate.getTime === "function") {
-        const monthNow = inputDate.getMonth() + 1;
-        const yearNow = inputDate.getFullYear();
-        const nextDate = new Date(`${yearNow}-${monthNow}-01`);
-        console.log(inputDate);
-        console.log(monthNow);
-        console.log(yearNow);
-        console.log(nextDate);
-        return {
-            ["inputDate"]: inputDate,
-            ["daysInMonth"]: true,
-        };
-    } else {
+    if (!(typeof date.getTime === "function")) {
+        // Якщо date не є об'єктом Date, повертаємо рядок
+        // "Помилка: вхідне значення має бути об'єктом Date"
         return "Помилка: вхідне значення має бути об'єктом Date";
     }
+    // Збереження початкової дати для виведення  в форматі ISO.
+    let inputDate = date.toISOString();
+    // Отримання поточного місяця.
+    let month = date.getMonth();
+    // Отримання поточного року.
+    let year = date.getFullYear();
+    // Створення об'єкта Date для першого дня наступного місяця.
+    let nextMonth = new Date(year, month + 1, 1);
+    // Віднімання одного дня від наступного місяця, щоб отримати останній день поточного місяця.
+    nextMonth.setDate(nextMonth.getDate() - 1);
+    // Отримання числа останнього дня поточного місяця - це кількість днів у місяці.
+    let daysInMonth = nextMonth.getDate();
+    // Повертаємо об'єкт з початковою датою та кількістю днів у місяці.
+    return { inputDate, daysInMonth };
 }
 console.log("Завдання: 9 ==============================");
 
